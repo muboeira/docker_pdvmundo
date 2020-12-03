@@ -1,3 +1,4 @@
 .env
 redis/data/*
+!redis
 !redis/data
