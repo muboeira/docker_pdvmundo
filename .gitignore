@@ -1,4 +1,4 @@
 .env
 redis/data/*
-!redis
-!redis/data
+!redis/data/.gitkeep
+!redis/.gitkeep
