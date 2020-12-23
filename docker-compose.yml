@@ -10,9 +10,12 @@ services:
     image: pdvmundo-image
     container_name: pdvmundo-app
     restart: unless-stopped
-    working_dir: /var/www/
+    working_dir: /var/www
     volumes:
-      - ./pdvmundo_api:/var/www
+      - ${APPLICATION}:/var/www
+      - ${JOBAPPLICATION}:/var/www/job_app
+      - ./php/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - ./php/php.ini:/usr/local/etc/php/conf.d/php.ini
     networks:
       - app-network
 
@@ -23,7 +26,7 @@ services:
     ports:
       - 8000:80
     volumes:
-      - ./pdvmundo_api:/var/www
+      - ${APPLICATION}:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - app-network
@@ -40,6 +43,7 @@ services:
       - POSTGRES_DB=${POSTGRES_DB},${POSTGRES_DB_SECOND}
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_MULTIPLE_EXTENSIONS=postgis,hstore,postgis_topology,postgis_raster,pgrouting,unaccent
     networks:
       - app-network
 
